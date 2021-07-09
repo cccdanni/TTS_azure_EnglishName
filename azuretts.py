@@ -60,17 +60,24 @@ for name_nr in range(len(word)):
         word_text = word['First Name'][name_nr]
         word_syllabus = word['Syllabus'][name_nr]
         word_gender = word['Gender'][name_nr]
+
         fileTitle = 'Names_sounds/' + language + '/' + word_text +'_sy' + str(word_syllabus) + '_' + word_gender + '_' + language + '.wav'
+        
+        if os.path.isfile(fileTitle) == False :
 
-        # audio_config = AudioOutputConfig(filename=fileTitle)
-        # # Create a synthesizer with the given settings. 
-        # # Since no explicit audio config is specified, the default speaker will be 
-        # # used (make sure the audio settings are correct).
-        # synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
-        # synthesizer.speak_text_async(word_text)
+            # audio_config = AudioOutputConfig(filename=fileTitle)
+            # # Create a synthesizer with the given settings. 
+            # # Since no explicit audio config is specified, the default speaker will be 
+            # # used (make sure the audio settings are correct).
+            # synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+            # synthesizer.speak_text_async(word_text)
 
-        synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
-        result = synthesizer.speak_text_async(word_text).get()
-        stream = AudioDataStream(result)
-        stream.save_to_wav_file(fileTitle)
+            synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
+            result = synthesizer.speak_text_async(word_text).get()
+            stream = AudioDataStream(result)
+            stream.save_to_wav_file(fileTitle)
+
+            print ('completed: ' + word_text)
+        else:
+            print ('skip: ' + word_text)
 
